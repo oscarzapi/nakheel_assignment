@@ -1,0 +1,39 @@
+{
+	"name": "Lease_Details",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Lease_Details.xlsx",
+				"folderPath": "Lease_Details",
+				"fileSystem": "input"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "L_ID",
+				"type": "String"
+			},
+			{
+				"name": "lease_type",
+				"type": "String"
+			},
+			{
+				"name": "lease_status",
+				"type": "String"
+			},
+			{
+				"name": "Category",
+				"type": "String"
+			}
+		]
+	}
+}
