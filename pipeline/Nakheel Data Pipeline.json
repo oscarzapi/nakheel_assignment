@@ -126,13 +126,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "ExcelSource",
+						"type": "BinarySource",
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
 							"wildcardFolderPath": "Lease_Details",
 							"wildcardFileName": "*.xlsx",
-							"enablePartitionDiscovery": false
+							"deleteFilesAfterCompletion": false
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
 						}
 					},
 					"sink": {
@@ -145,7 +148,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Lease_Details",
+						"referenceName": "Lease_Details_Source",
 						"type": "DatasetReference"
 					}
 				],

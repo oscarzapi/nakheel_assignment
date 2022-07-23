@@ -1,0 +1,19 @@
+{
+	"name": "Lease_Details_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Lease_Details.xlsx",
+				"folderPath": "Lease_Details",
+				"fileSystem": "input"
+			}
+		}
+	}
+}
