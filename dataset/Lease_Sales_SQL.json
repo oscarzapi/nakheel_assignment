@@ -1,0 +1,43 @@
+{
+	"name": "Lease_Sales_SQL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "L_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "year_number",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "month_number",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Source_main",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 5
+			},
+			{
+				"name": "Source_Sub",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 5
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Lease_Sales"
+		}
+	}
+}

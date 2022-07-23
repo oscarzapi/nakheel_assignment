@@ -1,0 +1,43 @@
+{
+	"name": "Lease_Sales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Lease_Sales.xlsx",
+				"folderPath": "Lease_Sales",
+				"fileSystem": "input"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "L_ID",
+				"type": "String"
+			},
+			{
+				"name": "year",
+				"type": "String"
+			},
+			{
+				"name": "month",
+				"type": "String"
+			},
+			{
+				"name": "Source_main",
+				"type": "String"
+			},
+			{
+				"name": "Source_Sub",
+				"type": "String"
+			}
+		]
+	}
+}

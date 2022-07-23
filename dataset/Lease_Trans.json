@@ -1,0 +1,43 @@
+{
+	"name": "Lease_Trans",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Lease_Trans.xlsx",
+				"folderPath": "Lease_Trans",
+				"fileSystem": "input"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "L_ID",
+				"type": "String"
+			},
+			{
+				"name": "Area_PerSqFT",
+				"type": "String"
+			},
+			{
+				"name": "Monthly_Rent",
+				"type": "String"
+			},
+			{
+				"name": "Lease_From",
+				"type": "String"
+			},
+			{
+				"name": "Lease_To",
+				"type": "String"
+			}
+		]
+	}
+}

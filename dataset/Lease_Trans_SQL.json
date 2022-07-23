@@ -1,0 +1,40 @@
+{
+	"name": "Lease_Trans_SQL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "L_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "Area_PerSqFT",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Monthly_Rent",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 5
+			},
+			{
+				"name": "Lease_From",
+				"type": "date"
+			},
+			{
+				"name": "Lease_To",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Lease_Trans"
+		}
+	}
+}

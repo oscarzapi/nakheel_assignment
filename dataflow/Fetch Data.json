@@ -1,0 +1,169 @@
+{
+	"name": "Fetch Data",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Lease_Details",
+						"type": "DatasetReference"
+					},
+					"name": "LeaseDetails"
+				},
+				{
+					"dataset": {
+						"referenceName": "Lease_Sales",
+						"type": "DatasetReference"
+					},
+					"name": "LeaseSales"
+				},
+				{
+					"dataset": {
+						"referenceName": "Lease_Trans",
+						"type": "DatasetReference"
+					},
+					"name": "LeaseTrans"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Lease_Details_SQL",
+						"type": "DatasetReference"
+					},
+					"name": "LeaseDetailsSQL"
+				},
+				{
+					"dataset": {
+						"referenceName": "Lease_Sales_SQL",
+						"type": "DatasetReference"
+					},
+					"name": "LeaseSalesSQL"
+				},
+				{
+					"dataset": {
+						"referenceName": "Lease_Trans_SQL",
+						"type": "DatasetReference"
+					},
+					"name": "LeaseTransSQL"
+				}
+			],
+			"transformations": [
+				{
+					"name": "upsertRows"
+				},
+				{
+					"name": "upsertRowsSales"
+				},
+				{
+					"name": "upsertRowsTrans"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          L_ID as string,",
+				"          lease_type as string,",
+				"          lease_status as string,",
+				"          Category as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: true,",
+				"     moveFiles: ['Lease_Details','Lease_Details/processed']) ~> LeaseDetails",
+				"source(output(",
+				"          L_ID as string,",
+				"          year as integer,",
+				"          month as integer,",
+				"          Source_main as decimal(10,0),",
+				"          Source_Sub as decimal(10,0)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: true,",
+				"     moveFiles: ['Lease_Sales','Lease_Sales/processed']) ~> LeaseSales",
+				"source(output(",
+				"          L_ID as string,",
+				"          Area_PerSqFT as integer,",
+				"          Monthly_Rent as decimal(10,0),",
+				"          Lease_From as date,",
+				"          Lease_To as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: true,",
+				"     moveFiles: ['Lease_Trans','Lease_Trans/processed']) ~> LeaseTrans",
+				"LeaseDetails alterRow(upsertIf(true())) ~> upsertRows",
+				"LeaseSales alterRow(upsertIf(true())) ~> upsertRowsSales",
+				"LeaseTrans alterRow(upsertIf(true())) ~> upsertRowsTrans",
+				"upsertRows sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          L_ID as string,",
+				"          lease_type as string,",
+				"          lease_status as string,",
+				"          Category as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['L_ID'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> LeaseDetailsSQL",
+				"upsertRowsSales sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          L_ID as string,",
+				"          year_number as integer,",
+				"          month_number as integer,",
+				"          Source_main as decimal(10,5),",
+				"          Source_Sub as decimal(10,5)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['L_ID'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          L_ID,",
+				"          year_number = year,",
+				"          Source_main,",
+				"          Source_Sub,",
+				"          month_number = month",
+				"     )) ~> LeaseSalesSQL",
+				"upsertRowsTrans sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          L_ID as string,",
+				"          Area_PerSqFT as integer,",
+				"          Monthly_Rent as decimal(10,5),",
+				"          Lease_From as date,",
+				"          Lease_To as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['L_ID'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          L_ID,",
+				"          Area_PerSqFT,",
+				"          Monthly_Rent,",
+				"          Lease_From,",
+				"          Lease_To",
+				"     )) ~> LeaseTransSQL"
+			]
+		}
+	}
+}
